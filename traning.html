@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Слайдер</title>
+<style>
+  #sliderContainer {
+    width: 500px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #sliderImages {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 500%;  
+  }
+
+  #sliderImages img {
+    width: 52%;
+    height: auto;
+    flex-shrink: 0; 
+  }
+
+
+  .button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.8;
+    z-index: 1;
+    display: none;
+  }
+
+  .button:hover {
+    opacity: 1;
+  }
+  #leftButton {
+    left: 10px;
+  }
+  #rightButton {
+    right: 10px;
+  }
+
+  #sliderImages img {
+      object-fit: cover;
+  }
+
+
+</style>
+</head>
+<body>
+
+<div id="sliderContainer">
+  <div id="sliderImages">
+    <img src="1.png" alt="Изображение 1">
+    <img src="2.png" alt="Изображение 2">
+    <img src="3.png" alt="Изображение 3">
+    <img src="4.png" alt="Изображение 4">
+  </div>
+    <button id="leftButton" class="button">Предыдущая</button>
+    <button id="rightButton" class="button">Следующая</button>
+</div>
+
+<script>
+  const sliderImages = document.getElementById('sliderImages');
+  const sliderContainer = document.getElementById('sliderContainer');
+  const leftButton = document.getElementById('leftButton');
+  const rightButton = document.getElementById('rightButton');
+  let currentImage = 0;
+  const images = document.querySelectorAll('#sliderImages img');
+  const imageCount = images.length;
+
+
+  function updateSlider() {
+    sliderImages.style.transform = `translateX(-${currentImage * 100}%)`;
+      if(imageCount > 1){
+          leftButton.style.display = "block";
+          rightButton.style.display = "block";
+      } else {
+          leftButton.style.display = "none";
+          rightButton.style.display = "none";
+      }
+
+  }
+
+
+
+  function nextImage() {
+    currentImage++;
+    if (currentImage >= imageCount) {
+      currentImage = 0;
+    }
+    updateSlider();
+  }
+
+  function prevImage() {
+    currentImage--;
+    if (currentImage < 0) {
+      currentImage = imageCount - 1;
+    }
+    updateSlider();
+  }
+
+
+
+  rightButton.addEventListener('click', nextImage);
+  leftButton.addEventListener('click', prevImage);
+
+  updateSlider();
+
+
+</script>
+
+</body>
+</html>
